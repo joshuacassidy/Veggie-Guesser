@@ -10,15 +10,16 @@ words = [
   ,'rhubarb','scallion','shallot','radicchio','wasabi','chicory'
   ]
 hints = [
-  'This vegetable is a key ingredient in crisps','A vegetable that is typically orange in color','This vegetable makes your eyes water',
-  'This vegetable is a key ingredient in a sauce','This vegetable is green in color and found in a pod','A green vegtable thats a good source of potassium'
-  ,'This vegetable looks like a small tree','celery','spinach','cucumber','turnip'
-  ,'This vegetable is a deep purple color','A serving of this vegetable has more calcium than a small carton of milk.',
-  'This vegetable can grow at one inch per hour ','This is a leaf like vegetable','This is a ceral crop'
-  ,'This vegetable is typically consumed raw','This vegetable can cause bad breath','This vegetable goes well in potato soup',
-  'This vegetable is closely related to carrots'
-  ,'This vegetables stalk resemebles celery','This vegetable belongs to the same family as onions','This vegetable belongs to the same family as scallion',
-  'This vegetable belongs to the daisy family','This vegetable belongs to the cabbage family','This vegetable belongs to the daisy family'
+ 'This vegetable is a key ingredient in crisps','A vegetable that is typically orange in color','This vegetable makes your eyes water',
+ 'This vegetable is a key ingredient in a sauce','This vegetable is green in color and found in a pod','A green vegtable thats a good source of potassium'
+ ,'This vegetable looks like a small tree','celery','spinach','cucumber','turnip'
+ ,'This vegetable is a deep purple color','A serving of this vegetable has more calcium than a small carton of milk.',
+ 'This vegetable can grow at one inch per hour ','This is a leaf like vegetable','This is a ceral crop'
+ ,'This vegetable is typically consumed raw','This vegetable can cause bad breath','This vegetable goes well in potato soup',
+ 'This vegetable is closely related to carrots'
+ ,'This vegetables stalk resemebles celery','This vegetable belongs to the same family as onions','This vegetable belongs to the same family as scallion',
+ 'This vegetable belongs to the daisy family','This vegetable belongs to the cabbage family','This vegetable belongs to the daisy family'
+
 ]
 getHint = 'hint'
 
@@ -30,23 +31,23 @@ def clear():
     else:
         os.system('cls')
 
-def draw(badguess,goodguess,allguesses,word,amountOfGuesses):
+def draw(badGuess,goodGuess,allGuesses,word,amountOfGuesses):
     clear()
-    print('Amount of guesses: {}/{}'.format(len(badguess),amountOfGuesses))
+    print('Amount of guesses: {}/{}'.format(len(badGuess),amountOfGuesses))
     print('')
 
-    for letter in allguesses:
+    for letter in allGuesses:
         print(letter,end=' ')
     print('\n\n')
 
     for letter in word:
-        if letter in goodguess:
+        if letter in goodGuess:
             print(letter,end='')
         else:
-            print('',end='')
+            print('_',end='')
     print('')
 
-def getguess(badguess,goodguess,allguesses,word):
+def getGuess(badGuess,goodGuess,allGuesses,word):
 
     while True:
 
@@ -57,7 +58,7 @@ def getguess(badguess,goodguess,allguesses,word):
                     print(hints[index])
         elif len(guess) != 1 and guess != getHint:
             print("You can only guess one letter at a time")
-        elif guess in badguess or guess in goodguess:
+        elif guess in badGuess or guess in goodGuess:
             print("You've already guessed that letter")
         elif not guess.isalpha():
             print("You can only guess letters!")
@@ -66,9 +67,9 @@ def getguess(badguess,goodguess,allguesses,word):
 
 def play(done):
 
-    badguess = []
-    goodguess = []
-    allguesses = []
+    badGuess = []
+    goodGuess = []
+    allGuesses = []
     word = random.choice(words)
     clear()
     print('Choose your difficulty')
@@ -95,33 +96,32 @@ def play(done):
         else:
             amountOfGuesses = 7
 
-
     while True:
 
-        draw(badguess,goodguess,allguesses,word,amountOfGuesses)
-        guess = getguess(badguess,goodguess,allguesses,word)
+        draw(badGuess,goodGuess,allGuesses,word,amountOfGuesses)
+        guess = getGuess(badGuess,goodGuess,allGuesses,word)
 
         if guess in word:
-            goodguess.append(guess)
-            allguesses.append(guess)
+            goodGuess.append(guess)
+            allGuesses.append(guess)
             found = True
             for letter in word:
-                if letter not in goodguess:
+                if letter not in goodGuess:
                     found = False
             if found:
                 print("You win the word was {}.".format(word))
                 done = True
         else:
-            badguess.append(guess)
-            allguesses.append(guess)
-            if len(badguess) == amountOfGuesses:
-                draw(badguess,goodguess,allguesses,word,amountOfGuesses)
+            badGuess.append(guess)
+            allGuesses.append(guess)
+            if len(badGuess) == amountOfGuesses:
+                draw(badGuess,goodGuess,allGuesses,word,amountOfGuesses)
                 print("You lose the word was {}".format(word))
                 done = True
 
         if done:
-            playagain = input("Do you want to Play again? Y/N? ").lower()
-            return play(done = False) if playagain.lower() != 'n' else exitGame()
+            playAgain = input("Do you want to Play again? Y/N? ").lower()
+            return play(done = False) if playAgain.lower() != 'n' else exitGame()
 
 def welcome():
     print('Welcome to veggie guesser a game where you guess the vegetable.')
